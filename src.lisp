@@ -26,7 +26,7 @@
 
 (defpackage #:puri
   (:use #:cl)
-  #-allegro (:nicknames #:net.uri)
+  #-(or allegro zacl) (:nicknames #:net.uri)
   (:export
    #:uri                                ; the type and a function
    #:uri-p
@@ -36,6 +36,7 @@
    #:uri-host #:uri-port
    #:uri-path
    #:uri-query
+   #:uri-is-ip6
    #:uri-fragment
    #:uri-plist
    #:uri-authority                      ; pseudo-slot accessor
@@ -240,6 +241,10 @@
     :initarg :parsed-path
     :initform nil
     :accessor .uri-parsed-path)
+   (is-ip6
+    :initarg :is-ip6
+    :initform nil
+    :accessor uri-is-ip6)
    (hashcode
     ;; cached sxhash, so we don't have to compute it more than once.
     :initarg :hashcode :initform nil :accessor uri-hashcode)))
